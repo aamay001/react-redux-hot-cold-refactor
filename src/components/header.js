@@ -1,22 +1,15 @@
 import React from 'react';
-
+import {connect} from 'react-redux';
 import TopNav from './top-nav';
 import InfoModal from './info-modal';
+import {toggleInfoModal} from '../actions';
 
 import './header.css';
 
-export default class Header extends React.Component  {
-    constructor(props) {
-        super(props);
-        this.state = {
-            showInfoModal: false
-        };
-    }
+export class Header extends React.Component  {
 
     toggleInfoModal() {
-        this.setState({
-            showInfoModal: !this.state.showInfoModal
-        });
+        this.props.dispatch(toggleInfoModal());
     }
 
     render() {
@@ -35,3 +28,10 @@ export default class Header extends React.Component  {
         );
     }
 };
+
+const mapStateToProps = (state) => ({
+    showInfoModal: state.showInfoModal,
+    onNewGame: state.onNewGame
+});
+
+export default connect(mapStateToProps)(Header);
