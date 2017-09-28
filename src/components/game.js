@@ -4,13 +4,9 @@ import Header from './header';
 import GuessSection from './guess-section';
 import GuessCount  from './guess-count';
 import GuessList from './guess-list';
-import {newGame, guessNumber} from '../actions';
+import {guessNumber} from '../actions';
 
 export class Game extends React.Component {
-
-    newGame() {
-        this.props.dispatch(newGame());
-    }
 
     guess(guess) {
         guess = parseInt(guess, 10);
@@ -44,7 +40,7 @@ export class Game extends React.Component {
     render() {
         return (
             <div>
-                <Header onNewGame={() => this.newGame()}/>
+                <Header />
                 <GuessSection feedback={this.props.feedback}
                     onGuess={(guess) => this.guess(guess)} />
                 <GuessCount count={this.props.guesses.length} />
