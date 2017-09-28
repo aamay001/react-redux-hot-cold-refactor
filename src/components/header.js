@@ -14,7 +14,7 @@ export class Header extends React.Component  {
 
     render() {
         let infoModal;
-        if (this.state.showInfoModal) {
+        if (this.props.showInfoModal) {
             infoModal = <InfoModal onClose={() => this.toggleInfoModal()} />;
         }
 
@@ -31,7 +31,6 @@ export class Header extends React.Component  {
 
 const mapStateToProps = (state) => ({
     showInfoModal: state.showInfoModal,
-    onNewGame: state.onNewGame
 });
 
 export default connect(mapStateToProps)(Header);

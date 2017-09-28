@@ -14,7 +14,7 @@ const initialState = {
 export const hotColdReducer = (state=initialState, action) => {
   if(action.type === actions.GUESS_NUMBER){
     return Object.assign({}, state, {
-      guesses: [...state.gusses, action.number],
+      guesses: [...state.guesses, action.number],
       feedback: action.feedback
     });
   }

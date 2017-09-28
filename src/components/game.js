@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Header} from './header';
+import Header from './header';
 import GuessSection from './guess-section';
 import GuessCount  from './guess-count';
 import GuessList from './guess-list';
@@ -9,19 +9,17 @@ import {newGame, guessNumber} from '../actions';
 export class Game extends React.Component {
 
     newGame() {
-        this.props.dispatch(newGame);
+        this.props.dispatch(newGame());
     }
 
     guess(guess) {
         guess = parseInt(guess, 10);
         if (isNaN(guess)) {
-            this.setState({
-                feedback: 'Please enter a valid number'
-            });
+            this.props.dispatch(guessNumber(guess, 'Please enter a valid number'));
             return;
         }
 
-        const difference = Math.abs(guess - this.state.correctAnswer);
+        const difference = Math.abs(guess - this.props.correctAnswer);
 
         let feedback;
         if (difference >= 50) {
@@ -47,16 +45,21 @@ export class Game extends React.Component {
         return (
             <div>
                 <Header onNewGame={() => this.newGame()}/>
-                <GuessSection feedback={this.state.feedback}
+                <GuessSection feedback={this.props.feedback}
                     onGuess={(guess) => this.guess(guess)} />
-                <GuessCount count={this.state.guesses.length} />
-                <GuessList guesses={this.state.guesses} />
+                <GuessCount count={this.props.guesses.length} />
+                <GuessList guesses={this.props.guesses} />
             </div>
         );
     }
 }
 
-const mapStateToProps = (state) => ({
+Game.defaultProps = {
+    guesses: [],
+    feedback: ''
+};
+
+const mapStateToProps = state => ({
     guesses: state.guesses,
     feedback: state.feedback,
     correctAnswer: state.correctAnswer
